@@ -5,84 +5,56 @@ import Navbar from "../components/Navbar";
 
 export default function ProfilePage() {
   const [balance, setBalance] = useState(2140);
-  const [esewaNumber, setEsewaNumber] = useState("");
-  const [amount, setAmount] = useState("");
+  const [activeTab, setActiveTab] = useState<"videos" | "likes">("videos");
 
-  const handleWithdraw = (e: React.FormEvent) => {
-    e.preventDefault();
-    const withdrawAmount = parseFloat(amount);
-    if (!esewaNumber || isNaN(withdrawAmount) || withdrawAmount <= 0) {
-      alert("Please provide a valid eSewa ID and amount.");
-      return;
-    }
-    if (withdrawAmount > balance) {
-      alert("Insufficient earnings balance.");
-      return;
-    }
-    setBalance((prev) => prev - withdrawAmount);
-    alert(`Success: Withdrawal request of NPR ${withdrawAmount} submitted for eSewa account ${esewaNumber}`);
-    setAmount("");
-  };
+  const myUploadedVideos = [
+    { id: "1", views: "14.2K", thumbnail: "https://assets.mixkit.co/videos/preview/mixkit-vertical-shot-of-a-waterfall-in-a-forest-42891-large.mp4" },
+  ];
 
   return (
-    <main className="min-h-screen bg-black text-white p-6 pb-24">
-      <div className="flex flex-col items-center mt-6">
-        <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-red-500 to-green-500 flex items-center justify-center text-3xl font-bold">
-          🇳🇵
-        </div>
-        <h2 className="mt-4 text-xl font-bold">@neptok_creator</h2>
-        <p className="text-xs text-gray-400">Content Creator & Streamer</p>
+    <main className="min-h-screen bg-black text-white p-4 pb-24">
+      <div className="flex flex-col items-center mt-4">
+        <div className="w-20 h-20 rounded-full bg-red-600 flex items-center justify-center text-2xl font-bold">🇳🇵</div>
+        <h2 className="mt-2 text-lg font-bold">@neptok_creator</h2>
+        <p className="text-xs text-gray-400">Nepal Content Creator</p>
       </div>
 
-      <div className="flex justify-around bg-gray-900 border border-gray-800 rounded-xl p-4 mt-6">
-        <div className="text-center">
-          <p className="font-bold text-lg">12.4K</p>
-          <p className="text-xs text-gray-400">Followers</p>
-        </div>
-        <div className="text-center">
-          <p className="font-bold text-lg">182</p>
-          <p className="text-xs text-gray-400">Following</p>
-        </div>
-        <div className="text-center">
-          <p className="font-bold text-lg">89.2K</p>
-          <p className="text-xs text-gray-400">Likes</p>
-        </div>
+      <div className="flex justify-around bg-gray-900 border border-gray-800 rounded-xl p-3 mt-4 text-center">
+        <div><p className="font-bold text-sm">12.4K</p><p className="text-[10px] text-gray-400">Followers</p></div>
+        <div><p className="font-bold text-sm">182</p><p className="text-[10px] text-gray-400">Following</p></div>
+        <div><p className="font-bold text-sm">89.2K</p><p className="text-[10px] text-gray-400">Likes</p></div>
       </div>
 
-      <div className="bg-gray-900 border border-green-800/60 rounded-xl p-5 mt-6">
-        <h3 className="text-base font-bold text-green-400 mb-1">Creator Earnings Wallet</h3>
-        <p className="text-2xl font-extrabold text-white mb-4">NPR {balance}</p>
+      {/* Tabs */}
+      <div className="flex border-b border-gray-800 mt-6">
+        <button
+          onClick={() => setActiveTab("videos")}
+          className={`flex-1 py-2 text-center text-xs font-bold border-b-2 ${
+            activeTab === "videos" ? "border-red-500 text-white" : "border-transparent text-gray-500"
+          }`}
+        >
+          Uploaded Videos
+        </button>
+        <button
+          onClick={() => setActiveTab("likes")}
+          className={`flex-1 py-2 text-center text-xs font-bold border-b-2 ${
+            activeTab === "likes" ? "border-red-500 text-white" : "border-transparent text-gray-500"
+          }`}
+        >
+          Liked Videos
+        </button>
+      </div>
 
-        <form onSubmit={handleWithdraw} className="space-y-3">
-          <div>
-            <label className="block text-xs text-gray-400 mb-1">eSewa Mobile Number / ID</label>
-            <input
-              type="text"
-              placeholder="98XXXXXXXX"
-              value={esewaNumber}
-              onChange={(e) => setEsewaNumber(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-green-500"
-              required
-            />
+      {/* Uploaded Videos Grid */}
+      <div className="grid grid-cols-3 gap-1 mt-2">
+        {myUploadedVideos.map((vid) => (
+          <div key={vid.id} className="relative aspect-[3/4] bg-gray-900 rounded-md overflow-hidden">
+            <video src={vid.thumbnail} className="w-full h-full object-cover" />
+            <span className="absolute bottom-1 left-1 text-[10px] font-bold bg-black/60 px-1 rounded">
+              ▶ {vid.views}
+            </span>
           </div>
-          <div>
-            <label className="block text-xs text-gray-400 mb-1">Withdraw Amount (NPR)</label>
-            <input
-              type="number"
-              placeholder="Min. NPR 100"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-green-500"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-green-600 hover:bg-green-700 font-bold py-2.5 rounded-lg text-sm transition"
-          >
-            Withdraw to eSewa
-          </button>
-        </form>
+        ))}
       </div>
 
       <Navbar />
