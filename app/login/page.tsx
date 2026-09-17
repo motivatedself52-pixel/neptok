@@ -1,16 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 
 export default function LoginPage() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(isSignUp ? "Account created successfully!" : "Logged in successfully!");
+    
+    // Redirect user after login
+    if (isSignUp) {
+      alert("Account created successfully!");
+    } else {
+      alert("Logged in successfully!");
+    }
+    
+    router.push("/"); // Redirects to Home page immediately
   };
 
   return (
@@ -29,7 +39,7 @@ export default function LoginPage() {
               placeholder="98XXXXXXXX"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-red-500"
+              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-red-500 text-white"
               required
             />
           </div>
@@ -41,14 +51,14 @@ export default function LoginPage() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-red-500"
+              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-red-500 text-white"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-red-600 hover:bg-red-700 font-bold py-2.5 rounded-lg text-sm transition"
+            className="w-full bg-red-600 hover:bg-red-700 font-bold py-2.5 rounded-lg text-sm transition text-white"
           >
             {isSignUp ? "Sign Up" : "Log In"}
           </button>
