@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "NepTok",
-  description: "NepTok - Short videos",
+  description: "Short video sharing and monetization platform",
 };
 
 export default function RootLayout({
@@ -12,7 +12,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <head>
+        <script src="https://cdn.tailwindcss.com"></script>
+      </head>
+      <body className="bg-black text-white antialiased">{children}</body>
     </html>
   );
 }
