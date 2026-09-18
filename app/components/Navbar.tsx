@@ -7,7 +7,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center bg-black/95 border-t border-gray-800 py-2 text-[10px] text-white">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center bg-black border-t border-gray-800 py-2 text-[10px] text-white">
       <Link href="/" className={`flex flex-col items-center gap-0.5 ${pathname === "/" ? "text-white font-bold" : "text-gray-400"}`}>
         <span className="text-lg">🏠</span>
         <span>Home</span>
